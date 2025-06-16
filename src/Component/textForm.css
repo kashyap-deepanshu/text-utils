@@ -1,9 +1,47 @@
-.btnFamily >button{
+/* .btnFamily >button{
     width:100px;
    margin:0 20px 0 0;
+} */
+
+.btnFamily {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
+
+.btnFamily .btn {
+  flex: 1 1 calc(50% - 10px); /* Mobile: 2 per row */
+}
+
+@media (min-width: 576px) {
+  .btnFamily .btn {
+    flex: 1 1 calc(33.33% - 10px); /* Tablet: 3 per row */
+  }
+}
+
+@media (min-width: 768px) {
+  .btnFamily .btn {
+    flex: 1 1 calc(25% - 10px); /* Medium: 4 per row */
+  }
+}
+
+@media (min-width: 992px) {
+  .btnFamily .btn {
+    flex: 1 1 calc(12.5% - 10px); /* Large: 6 per row */
+  }
+}
+
 
 .btn-click-effect.btn-click-effect:active {
   transform: scale(0.95);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.placeholder-background-light::placeholder{
+  color:"rgb(4, 59, 51)";
+  opacity: 0.5;
+}
+.placeholder-background-dark::placeholder{
+  color:white;
+  opacity: 0.5;
 }

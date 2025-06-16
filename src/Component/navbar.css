@@ -6,3 +6,15 @@
        background-color: #F8F8F8;
     color: 022b25;
 }
+
+
+.toggler-light {
+  border: 2px solid black;
+  background-color: white;
+  border-radius: 4px;
+}
+
+.toggler-dark {
+  filter: invert(1); /* Makes the icon white */
+ 
+}

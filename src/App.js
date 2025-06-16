@@ -13,7 +13,7 @@ function App() {
       setToggle(true);
      document.body.style.backgroundColor = "rgb(4, 59, 51)";
      document.body.style.color = "#ffffff";
-    //  document.getElementsByClassName("navbarMode").style.backgroundColor="#04302a";
+    //document.getElementsByClassName("navbarMode").style.backgroundColor="#04302a";
     } else {
       setMode("light");
       setToggle(false);

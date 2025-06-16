@@ -1,28 +1,26 @@
 // import React from "react";
-import { Moon , Sun } from 'lucide-react';
+import { Moon, Sun } from 'lucide-react';
 
 
 import PropTypes from 'prop-types';
 import "./navbar.css"
 
-export default function Navbar(props ) {
+export default function Navbar(props) {
 
 
-   
 
-   
+
+
     return (
         <nav className={`navbar navbar-expand-lg navbarMode${props.mode}`}>
-        {/* //  <nav className={`navbar navbar-expand-lg bg-${props.mode} navbar-${props.mode}`}>  */}
+            {/* //  <nav className={`navbar navbar-expand-lg bg-${props.mode} navbar-${props.mode}`}>  */}
 
             <div className="container-fluid">
-                <span span className={`navbar-brand ${props.mode === "dark" ? "text-white" : "text-dark"}`} href="/">
-
-
+                <span className={`navbar-brand ${props.mode === "dark" ? "text-white" : "text-dark"}`} href="/">
                     {props.title}
                 </span>
                 <button
-                    className="navbar-toggler"
+                    className={`navbar-toggler ${props.mode === "dark" ? "toggler-dark" : "toggler-light"}`}
                     type="button"
                     data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent"
@@ -30,7 +28,7 @@ export default function Navbar(props ) {
                     aria-expanded="false"
                     aria-label="Toggle navigation"
                 >
-                    <span className="navbar-toggler-icon"></span>
+                    <span className="navbar-toggler-icon  "></span>
                 </button>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
@@ -41,7 +39,7 @@ export default function Navbar(props ) {
                         </li>
                         <li className="nav-item">
                             <span className={`nav-link active ${props.mode === "dark" ? "text-white" : "text-dark"}`} >
-                                {props.about}
+                                {/* {props.about} //about section for future purpose */}
                             </span>
                         </li>
                     </ul>
@@ -57,7 +55,7 @@ export default function Navbar(props ) {
                         </button>
                     </form> */}
 
-                    <button onClick={props.handleToggle} title={props.toggle?"Light Mode":"Dark Mode" } style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
+                    <button onClick={props.handleToggle} title={props.toggle ? "Light Mode" : "Dark Mode"} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
                         {props.toggle ? <Sun color="green" title="Light Mode" size={24} /> : <Moon color="gray" title="Dark Mode" size={24} />}
                     </button>
                 </div>
