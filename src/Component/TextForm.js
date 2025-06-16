@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState , useRef} from 'react';
 import { jsPDF } from 'jspdf';
+import html2canvas from 'html2canvas';
+
 import { CaseUpper, CaseLower, Trash2Icon, Plus, Text, Minus, Copy, Space, Download } from 'lucide-react';
 import "./textForm.css";
 
@@ -53,18 +55,35 @@ export default function TextForm(props) {
     const handleExtraSpace = () => {
         setText(text.trim().replace(/\s+/g, ' '));
     };
+const textRef = useRef();
 
-    const downloadAsPdf = () => {
-        if (text.length !== 0) {
-            const doc = new jsPDF();
-            const lines = doc.splitTextToSize(text, 180); // wrap long text
-            doc.text(lines, 10, 10);                      // add to PDF at x=10, y=10
-            doc.save('Text-utils.pdf');              // download PDF
-        }
-        else {
-            window.alert("Enter Text to Download.");
-        }
-    };
+   const downloadAsPdf = async () => {
+  if (!textRef.current) return;
+
+  // Make sure the element is visible to be captured
+  textRef.current.style.display = 'block';
+
+  try {
+    const canvas = await html2canvas(textRef.current, {
+      scale: 2, // better quality
+    });
+
+    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jsPDF();
+    const imgProps = pdf.getImageProperties(imgData);
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+    pdf.save('emoji-text.pdf');
+  } catch (error) {
+    console.error("Error generating PDF", error);
+    alert("Failed to generate PDF. Check console for details.");
+  }
+
+  // Optionally hide it again
+  textRef.current.style.display = 'none';
+};
 
     // const handleItalic =()=>{
     //     if(italic ===true){
@@ -107,7 +126,25 @@ export default function TextForm(props) {
                         className={`form-control placeholder-background-${props.mode}`}
                         id="myBox"
                     />
+
                 </div>
+                 {/* This div is hidden, only for PDF generation */}
+  <div
+  ref={textRef}
+  style={{
+    fontSize: `${fontSize}px`,
+    padding: "10px",
+    color: props.mode === "dark" ? "white" : "black",
+    backgroundColor: props.mode === "dark" ? "rgb(4, 59, 51)" : "white",
+    width: "210mm",
+    wordWrap: "break-word",
+    whiteSpace: "pre-wrap",
+    display: "none", // change this temporarily to 'block' to test
+    fontFamily: `'Segoe UI Emoji', 'Noto Color Emoji', 'Apple Color Emoji', sans-serif`,
+  }}
+>
+  {text}
+</div>
                 
                 <div className='btnFamily'>
                     <button onClick={handleUpCase} title="Click to UpperCase"
